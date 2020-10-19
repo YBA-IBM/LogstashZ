@@ -1,0 +1,4 @@
+arch: s390x
+services:
+  - docker
+script: docker login quay.io -u $ROBOT_USER -p $ROBOT_TOKEN && docker build Logstash --tag quay.io/ibmz/logstash:7.9.1 && docker push quay.io/ibmz/logstash:7.9.1
