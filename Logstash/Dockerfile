@@ -20,7 +20,7 @@
 ###############################################################################################################
 
 
-FROM quay.io/ibmz/golang:1.15 AS builder
+FROM quay.io/ibmz/golang:1.14 AS builder
 
 ADD env2yaml/env2yaml.go /go/
 RUN go get gopkg.in/yaml.v2 && go build /go/env2yaml.go
