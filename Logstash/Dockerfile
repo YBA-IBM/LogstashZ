@@ -20,12 +20,12 @@
 ###############################################################################################################
 
 
-FROM golang AS builder
+FROM quay.io/ibmz/golang:1.15 AS builder
 
 ADD env2yaml/env2yaml.go /go/
 RUN go get gopkg.in/yaml.v2 && go build /go/env2yaml.go
 
-FROM s390x/ubuntu:18.04
+FROM quay.io/ibmz/ubuntu:18.04
 
 ARG LOGSTASH_VER=7.9.1
 
