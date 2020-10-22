@@ -21,7 +21,7 @@ Logstash is licensed under the Elastic License https://github.com/elastic/logsta
 
 # Supported tags and respective `Dockerfile` links
 
--	[`7.9.2`](https://github.com/YBA-IBM/LogstashZ/tree/main/Logstash/Dockerfile)
+-	[`7.9.1`](https://github.com/YBA-IBM/LogstashZ/tree/main/Logstash/Dockerfile)
 
 # Quick reference (cont.)
 
