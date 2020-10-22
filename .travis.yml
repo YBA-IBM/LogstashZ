@@ -9,7 +9,6 @@ env:
     - REPO="quay.io/ibmz/logstash"
     - TAG="$REPO:7.9.1"
 before_script: 
-  - cd $TEST_DIR && chmod +x $TEST_SCRIPT
   - docker login quay.io -u $ROBOT_USER -p $ROBOT_TOKEN
 script: 
   - docker build $BUILD_DIR --tag $TAG
