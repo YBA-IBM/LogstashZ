@@ -1,4 +1,17 @@
 arch: s390x
 services:
   - docker
-script: docker login quay.io -u $ROBOT_USER -p $ROBOT_TOKEN && docker build Logstash --tag quay.io/ibmz/logstash:7.9.1 && docker push quay.io/ibmz/logstash:7.9.1
+env:
+  global:
+    - TEST_DIR="$PWD"
+    - TEST_SCRIPT="test.sh"
+    - BUILD_DIR="$PWD/Logstash"
+    - REPO="quay.io/ibmz/logstash"
+    - TAG="$REPO:7.9.1"
+before_script: 
+  - cd $TEST_DIR && chmod +x $TEST_SCRIPT
+  - docker login quay.io -u $ROBOT_USER -p $ROBOT_TOKEN
+script: 
+  - docker build $BUILD_DIR --tag $TAG
+after_script:
+  - docker push $REPO
