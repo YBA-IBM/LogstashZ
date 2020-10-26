@@ -1,5 +1,4 @@
-# LogstashZ
-
+# Logstash
 
 # Quick reference
   
