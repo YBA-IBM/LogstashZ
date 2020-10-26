@@ -23,6 +23,7 @@
 FROM quay.io/ibmz/golang:1.14 AS builder
 
 ADD env2yaml/env2yaml.go /go/
+
 RUN go get gopkg.in/yaml.v2 && go build /go/env2yaml.go
 
 FROM quay.io/ibmz/ubuntu:18.04
@@ -33,33 +34,6 @@ ARG LOGSTASH_VER=7.9.1
 LABEL maintainer="LoZ Open Source Ecosystem (https://www.ibm.com/developerworks/community/groups/community/lozopensource)"
 
 ENV LD_LIBRARY_PATH=/usr/lib/s390x-linux-gnu/jni/:$LD_LIBRARY_PATH
-
-# Install Dependencies
-RUN apt-get update && apt-get install -y openjdk-11-jdk locales \
-    libjffi-jni \
-    make \
-    tar \
-    wget \
-	curl
-
-# Provide a non-root user to run the process.
-RUN groupadd --gid 1000 logstash && \
-    /usr/sbin/useradd --uid 1000 --gid 1000 \
-      --home-dir /usr/share/logstash --no-create-home \
-      logstash
-
-# Add Logstash itself.
-RUN curl -Lo - https://artifacts.elastic.co/downloads/logstash/logstash-${LOGSTASH_VER}.tar.gz | \
-    tar zxf - -C /usr/share && \
-    mv /usr/share/logstash-${LOGSTASH_VER} /usr/share/logstash && \
-    chown --recursive logstash:logstash /usr/share/logstash/ && \
-    chown -R logstash:root /usr/share/logstash && \
-    chmod -R g=u /usr/share/logstash && \
-    find /usr/share/logstash -type d -exec chmod g+s {} \; && \
-    ln -s /usr/share/logstash /opt/logstash && \
-    # Cleanup Cache data , unused packages and source files
-    apt-get remove -y make wget curl && apt-get autoremove -y && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/share/logstash
 
@@ -72,15 +46,40 @@ ADD config/pipelines.yml config/pipelines.yml
 ADD config/logstash-full.yml config/logstash.yml
 ADD config/log4j2.properties config/
 ADD pipeline/default.conf pipeline/logstash.conf
-RUN chown --recursive logstash:root config/ pipeline/
+
+ADD bin/docker-entrypoint /usr/local/bin/
+
+
+# Run Everything
+RUN apt-get update && apt-get install -y openjdk-11-jdk locales \
+    libjffi-jni \
+    make \
+    tar \
+    wget \
+	curl && \
+    groupadd --gid 1000 logstash && \
+    /usr/sbin/useradd --uid 1000 --gid 1000 \
+      --home-dir /usr/share/logstash --no-create-home \
+      logstash && \
+    curl -Lo - https://artifacts.elastic.co/downloads/logstash/logstash-${LOGSTASH_VER}.tar.gz | \
+    tar zxf - -C /usr/share && \
+    mv /usr/share/logstash-${LOGSTASH_VER} /usr/share/logstash && \
+    chown --recursive logstash:logstash /usr/share/logstash/ && \
+    chown -R logstash:root /usr/share/logstash && \
+    chmod -R g=u /usr/share/logstash && \
+    find /usr/share/logstash -type d -exec chmod g+s {} \; && \
+    ln -s /usr/share/logstash /opt/logstash && \
+    # Cleanup Cache data , unused packages and source files
+    apt-get remove -y make wget curl && apt-get autoremove -y && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    locale-gen en_US.UTF-8 && \
+    chown --recursive logstash:root config/ pipeline/ && \ 
+    chmod 0755 /usr/local/bin/docker-entrypoint
+
 
 # Ensure Logstash gets a UTF-8 locale by default.
-RUN locale-gen en_US.UTF-8
 ENV LANG='en_US.UTF-8' LC_ALL='en_US.UTF-8'
 
-# Place the startup wrapper script.
-ADD bin/docker-entrypoint /usr/local/bin/
-RUN chmod 0755 /usr/local/bin/docker-entrypoint
 
 USER 1000
 
