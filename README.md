@@ -1,34 +1,21 @@
 # LogstashZ
 
-This repository contains the files for Logstash from this repository: https://github.com/linux-on-ibm-z/dockerfile-examples
-
-# License
-
-dockerfile-examples is licensed under the Apache License, Version 2.0.
-Logstash is licensed under the Elastic License https://github.com/elastic/logstash/blob/6.4/licenses/ELASTIC-LICENSE.txt
-
 
 # Quick reference
-
--	**Maintained by**:  
-	[the Elastic Team](https://github.com/elastic/logstash)
   
--	**Port Maintained by**:  
+-	**Build Source**:  
 	[Linux-on-IBM-Z Dockerfile Examples Repo](https://github.com/linux-on-ibm-z/dockerfile-examples)
   
 -	**Where to get help**:  
 	the [Logstash Discuss Forums](https://discuss.elastic.co/c/logstash) and the [Elastic community](https://www.elastic.co/community).
+	
+-	**Supported architectures**: s390x
+
 
 # Supported tags and respective `Dockerfile` links
 
 -	[`7.9.1`](https://github.com/YBA-IBM/LogstashZ/tree/main/Logstash/Dockerfile)
 
-# Quick reference (cont.)
-
--	**Where to file issues**:  
-	For issues with Logstash Docker Image or Logstash: https://github.com/YBA-IBM/LogstashZ/tree/main/Logstash/issues
-
--	**Supported architectures**: s390x
 
 # What is Logstash?
 
