@@ -17,7 +17,6 @@ Collection is accomplished via a number of configurable input plugins including 
 # About This Image
 
 The default distribution is governed by the Elastic License and includes the [full set of free features](https://www.elastic.co/subscriptions).
-The Linux-on-IBM-Z-Examples port
 
 The Linux-on-IBM-Z Dockerfile Examples port is governed by the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0)
 
