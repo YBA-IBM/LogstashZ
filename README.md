@@ -1,10 +1,12 @@
-# Logstash
+### This image is built to run on s390x architecture.
+-    [build source](https://github.com/YBA-IBM/LogstashZ) 
+-    [original source code](https://github.com/linux-on-ibm-z/dockerfile-examples/tree/master/Logstash)
+
 
 # Tags
--	[`7.9.1`](https://github.com/YBA-IBM/LogstashZ/tree/main/Logstash/Dockerfile)
+-	[`7.9.1`]
 
-
-# What is Logstash?
+# Logstash
 
 Logstash is an open source data collection engine with real-time pipelining capabilities. Logstash can dynamically unify data from disparate sources and normalize the data into destinations of your choice.
 
